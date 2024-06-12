@@ -2,44 +2,61 @@ import pygame
 from pygame.locals import *
 import time
 
-def draw_snake():
-  surface.fill((111,123,244))
-  surface.blit(snake,(snake_pos_x,snake_pos_y))
-  pygame.display.flip()
+class Snake:
+  def __init__(self,parent_screen):
+    self.snake = pygame.image.load(r"snake_game\resources\block.jpg")
+    self.snake_pos_x = 100
+    self.snake_pos_y = 100
+    self.parent_screen = parent_screen
+
+  def draw_snake(self):
+    self.parent_screen.fill((111,123,244))
+    self.parent_screen.blit(self.snake,(self.snake_pos_x,self.snake_pos_y)) #For inserting are drawing the things on the window surface blit() is used
+    pygame.display.flip() #For updating the changes to reflect in the screen (we can use update() also instead of flip())
+  
+  def move_up(self):
+    self.snake_pos_y -= 10
+    self.draw_snake()
+     
+  def move_down(self):
+    self.snake_pos_y += 10
+    self.draw_snake()
+
+  def move_left(self):
+    self.snake_pos_x -= 10
+    self.draw_snake()
+
+  def move_right(self):
+    self.snake_pos_x += 10
+    self.draw_snake()
+
+class Game:
+  def __init__(self):
+    pygame.init() #For initializing pygame
+    self.surface = pygame.display.set_mode((500,500)) #For initilizing the window basic step for pygame program
+    self.surface.fill((111,123,244)) #Fill the background with the colour
+    self.snake = Snake(self.surface)
+    self.snake.draw_snake()
+
+  def run(self):
+    running = True
+    #Event Loop
+    while running:
+      for event in pygame.event.get():
+        if event.type ==  KEYDOWN:
+          if event.key == K_ESCAPE:
+            running = False
+          elif event.key == K_UP:
+            self.snake.move_up()
+          elif event.key == K_DOWN:
+            self.snake.move_down()
+          elif event.key == K_LEFT:
+            self.snake.move_left()
+          elif event.key == K_RIGHT:
+            self.snake.move_right()
+        elif event.type == QUIT:
+          running = False
   
 if __name__ == "__main__":
-  
-  pygame.init() #For initializing pygame
-
-  surface = pygame.display.set_mode((500,500)) #For initilizing the window basic step for pygame program
-  surface.fill((111,123,244)) #Fill the background with the colour
-  
-  snake = pygame.image.load(r"snake_game\resources\block.jpg")
-  snake_pos_x = 100
-  snake_pos_y = 100
-  surface.blit(snake,(snake_pos_x,snake_pos_y)) #for inserting are drawing the things on the window surface blit() is used
-  
-  pygame.display.flip() #For updating the changes to reflect in the screen (we can use update() also instead of flip())
-
-  running = True
-  #Event Loop
-  while running:
-    for event in pygame.event.get():
-      if event.type ==  KEYDOWN:
-        if event.key == K_ESCAPE:
-          running = False
-        elif event.key == K_UP:
-          snake_pos_y -= 10
-          draw_snake()
-        elif event.key == K_DOWN:
-          snake_pos_y += 10
-          draw_snake()
-        elif event.key == K_LEFT:
-          snake_pos_x -= 10
-          draw_snake()
-        elif event.key == K_RIGHT:
-          snake_pos_x += 10
-          draw_snake()
-      elif event.type == QUIT:
-        running = False
-
+  game = Game()
+  game.run()
