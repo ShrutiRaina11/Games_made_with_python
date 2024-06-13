@@ -2,17 +2,33 @@ import pygame
 from pygame.locals import *
 import time
 
-class Snake:
+size = 40 #it same as the dimension of my snake image asa my snke image is 40*40
+
+class Apple:
   def __init__(self,parent_screen):
-    self.snake = pygame.image.load(r"snake_game\resources\block.jpg")
-    self.snake_pos_x = 100
-    self.snake_pos_y = 100
+    self.apple = pygame.image.load(r"snake_game\resources\apple.jpg")
+    self.apple_pos_x = size*3
+    self.apple_pos_y = size*3
+    self.parent_screen = parent_screen
+
+  def draw_apple(self):
+    #self.parent_screen.fill((111,123,244))
+    self.parent_screen.blit(self.apple,(self.apple_pos_x,self.apple_pos_y)) #For inserting are drawing the things on the window surface blit() is used
+    pygame.display.flip()
+
+class Snake:
+  def __init__(self,parent_screen,length):
+    self.snake = pygame.image.load(r"snake_game\resources\snake.jpg")
+    self.snake_length = length
+    self.snake_pos_x = [size]*self.snake_length
+    self.snake_pos_y = [size]*self.snake_length
     self.parent_screen = parent_screen
     self.direction = None
 
   def draw_snake(self):
     self.parent_screen.fill((111,123,244))
-    self.parent_screen.blit(self.snake,(self.snake_pos_x,self.snake_pos_y)) #For inserting are drawing the things on the window surface blit() is used
+    for i in range(self.snake_length):
+      self.parent_screen.blit(self.snake,(self.snake_pos_x[i],self.snake_pos_y[i])) #For inserting are drawing the things on the window surface blit() is used
     pygame.display.flip() #For updating the changes to reflect in the screen (we can use update() also instead of flip())
   
   def move_up(self):
@@ -28,23 +44,33 @@ class Snake:
     self.direction = "right"
 
   def snake_walk(self):
+    for i in range(self.snake_length-1,0,-1):
+      self.snake_pos_x[i] = self.snake_pos_x[i-1]
+      self.snake_pos_y[i] = self.snake_pos_y[i-1]
+
     if self.direction == "up":
-       self.snake_pos_y -= 10
+       self.snake_pos_y[0] -= size
     elif self.direction == "down":
-       self.snake_pos_y += 10
+       self.snake_pos_y[0] += size
     elif self.direction == "left":
-       self.snake_pos_x -= 10
+       self.snake_pos_x[0] -= size
     elif self.direction == "right":
-       self.snake_pos_x += 10
+       self.snake_pos_x[0] += size
     self.draw_snake()
 
 class Game:
   def __init__(self):
     pygame.init() #For initializing pygame
-    self.surface = pygame.display.set_mode((500,500)) #For initilizing the window basic step for pygame program
+    self.surface = pygame.display.set_mode((1300,800)) #For initilizing the window basic step for pygame program
     self.surface.fill((111,123,244)) #Fill the background with the colour
-    self.snake = Snake(self.surface)
+    self.snake = Snake(self.surface,3)
     self.snake.draw_snake()
+    self.apple = Apple(self.surface)
+    self.apple.draw_apple()
+
+  def play(self):
+    self.snake.snake_walk()
+    self.apple.draw_apple()
 
   def run(self):
     running = True
@@ -64,7 +90,8 @@ class Game:
             self.snake.move_right()
         elif event.type == QUIT:
           running = False
-      self.snake.snake_walk()
+
+      self.play()
       time.sleep(0.2)
   
 if __name__ == "__main__":
