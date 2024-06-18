@@ -7,6 +7,9 @@ root = Tk()
 root.title("Rock Paper Scissor")
 root.configure(background="#9b59b6")
 
+
+check_for_winner = 0
+
 #indicators
 user_indicator_label = Label(root,font=50,text="USER",background="#9b59b6",foreground="white")
 user_indicator_label.grid(row=0,column=1)
@@ -42,12 +45,12 @@ scissor_btn = Button(root,width=20,height=2,text="Scissor",background="#0ABDE3",
 scissor_btn.grid(row=2,column=3)
 
 #message
-msg_label = Label(root,text="You Win",font=50,background="#9b59b6",foreground="white")
+msg_label = Label(root,text="",font=50,background="#9b59b6",foreground="white")
 msg_label.grid(row=3,column=2)
 
 #update choices
 def updatde_choice(user_choice):
-
+  global check_for_winner
   #for user
   if user_choice=="rock":
     user_img_label.configure(image=rock_user_img)
@@ -66,7 +69,12 @@ def updatde_choice(user_choice):
   elif comp_choice=="scissor":
     comp_img_label.configure(image=scissor_comp_img)
 
-  check_winer(user_choice,comp_choice)
+  update_score(user_choice,comp_choice)
+  
+  check_for_winner += 1
+  if(check_for_winner == 10):
+    check_winner()
+  
 #update message
 def update_message(message):
   msg_label["text"] = message
@@ -84,31 +92,33 @@ def update_comp_score():
   comp_score_label["text"] = str(score)
 
 #check winner
-def check_winer(user_choice,comp_choice):
-  if user_choice == comp_choice:
-    update_message("It's a Tie!!")
-  elif user_choice == "rock":
+def update_score(user_choice,comp_choice):
+  if user_choice == "rock":
     if comp_choice == "paper":
-      update_message("Computer Win!!")
       update_comp_score()
     elif comp_choice == "scissor":
-      update_message("You Win!!")
       update_user_score()
   elif user_choice == "paper":
     if comp_choice == "rock":
-      update_message("You Win!!")
       update_user_score()
     elif comp_choice == "scissor":
-      update_message("Computer Win!!")
       update_comp_score()
   elif user_choice == "scissor":
     if comp_choice == "rock":
-      update_message("Computer Win!!")
       update_comp_score()
     elif comp_choice == "paper":
-      update_message("You Win!!")
       update_user_score()
   else:
     pass
-    
+
+def check_winner():
+  user_score = int(user_score_label["text"])
+  comp_score = int(comp_score_label["text"])
+  if(user_score == comp_score):
+    update_message("It's a Tie!!")
+  elif(user_score >= comp_score):
+    update_message("You Win!!")
+  elif(user_score <= comp_score):
+    update_message("Computer Win!!")
+ 
 root.mainloop()

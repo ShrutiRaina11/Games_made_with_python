@@ -18,6 +18,17 @@ player2_name.grid(row=2,column=1,columnspan=8)
 bclick = True
 flag = 0
 
+def btn_reset():
+  button1["text"] = ""
+  button2["text"] = ""
+  button3["text"] = ""
+  button4["text"] = ""
+  button5["text"] = ""
+  button6["text"] = ""
+  button7["text"] = ""
+  button8["text"] = ""
+  button9["text"] = ""
+
 def disableButton():
   button1.configure(state = DISABLED)
   button2.configure(state = DISABLED)
@@ -49,7 +60,7 @@ def btn_click(button):
 def check_for_win():
   if flag == 8:
     tkinter.messagebox.showinfo("Tic Tac Toe","It's a Tie!!")
-
+    btn_reset()
   elif(button1["text"] == "X" and button2["text"] == "X" and button3["text"] == "X" or 
        button4["text"] == "X" and button5["text"] == "X" and button6["text"] == "X" or 
        button7["text"] == "X" and button8["text"] == "X" and button9["text"] == "X" or 
@@ -60,7 +71,7 @@ def check_for_win():
        button3["text"] == "X" and button6["text"] == "X" and button9["text"] == "X"):
     disableButton()
     tkinter.messagebox.showinfo("Tic Tac Toe",player1)
-
+    btn_reset()
   elif(button1["text"] == "O" and button2["text"] == "O" and button3["text"] == "O" or 
        button4["text"] == "O" and button5["text"] == "O" and button6["text"] == "O" or 
        button7["text"] == "O" and button8["text"] == "O" and button9["text"] == "O" or 
@@ -71,7 +82,9 @@ def check_for_win():
        button3["text"] == "O" and button6["text"] == "O" and button9["text"] == "O"):
     disableButton()
     tkinter.messagebox.showinfo("Tic Tac Toe",player2)
-
+    btn_reset()
+  
+  
 buttons = StringVar()
 
 player1_label = Label(root, text = "Player 1: ", font="Times 20 bold", bg="white", fg="black", height=1,width=8)
