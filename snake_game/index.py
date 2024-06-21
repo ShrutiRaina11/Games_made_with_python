@@ -42,17 +42,21 @@ class Snake:
     self.snake_pos_x.append(-1)
     self.snake_pos_y.append(-1)
  
-  def move_up(self):
-    self.direction = "up"
+  def move_up(self,change_to):
+    if change_to == 'up' and self.direction != 'down':
+      self.direction = 'up'
      
-  def move_down(self):
-    self.direction = "down"
+  def move_down(self,change_to):
+    if change_to == 'down' and self.direction != 'up':
+      self.direction = 'down'
 
-  def move_left(self):
-    self.direction = "left"
+  def move_left(self,change_to):
+    if change_to == 'left' and self.direction != 'right':
+      self.direction = 'left'
 
-  def move_right(self):
-    self.direction = "right"
+  def move_right(self,change_to):
+    if change_to == 'right' and self.direction != 'left':
+      self.direction = 'right'
 
   def snake_walk(self):
     for i in range(self.snake_length-1,0,-1):
@@ -163,13 +167,13 @@ class Game:
             self.reset()
             running = True
           elif event.key == K_UP:
-            self.snake.move_up()
+            self.snake.move_up("up")
           elif event.key == K_DOWN:
-            self.snake.move_down()
+            self.snake.move_down("down")
           elif event.key == K_LEFT:
-            self.snake.move_left()
+            self.snake.move_left("left")
           elif event.key == K_RIGHT:
-            self.snake.move_right()
+            self.snake.move_right("right")
         elif event.type == QUIT:
           pygame.quit() # deactivating pygame library                        
           quit() # quit the program
