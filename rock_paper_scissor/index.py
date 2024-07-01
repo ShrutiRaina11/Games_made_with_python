@@ -4,6 +4,7 @@ from random import randint
 
 #background colour
 background_color = "#9b59b6"
+
 #main window
 root = Tk()
 root.title("Rock Paper Scissor")
@@ -26,35 +27,35 @@ scissor_comp_img = ImageTk.PhotoImage(Image.open(r"rock_paper_scissor\images\sci
 #insert picture
 user_img_label = Label(root,image = scissor_user_img,font=("arial",20,"bold"),background=background_color)
 comp_img_label = Label(root,image = scissor_comp_img,font=("arial",20,"bold"),background=background_color)
-user_img_label.grid(row=1,column=0,pady=(90, 10),padx=(10,0))
-comp_img_label.grid(row=1,column=4,pady=(90, 10),padx=(0,10))
+user_img_label.grid(row=1,column=0,pady=(90,10),padx=(10,0))
+comp_img_label.grid(row=1,column=4,pady=(90,10),padx=(0,10))
 
 #scores
 user_score_label = Label(root,text=0,font=("arial",20,"bold"),background=background_color,foreground="white")
 comp_score_label = Label(root,text=0,font=("arial",20,"bold"),background=background_color,foreground="white")
-user_score_label.grid(row=1,column=1,pady=(50, 10))
-comp_score_label.grid(row=1,column=3,pady=(50, 10))
+user_score_label.grid(row=1,column=1,pady=(50,10))
+comp_score_label.grid(row=1,column=3,pady=(50,10))
 
 #buttons
 rock_btn = Button(root,width=20,height=2,text="Rock",background="#FF3E4D",font=("arial",20,"bold"),foreground="black",command=lambda:updatde_choice("rock"))
-rock_btn.grid(row=2,column=1,pady=(90, 10))
+rock_btn.grid(row=2,column=1,pady=(90,10))
 paper_btn = Button(root,width=20,height=2,text="Paper",background="#FAD02E",font=("arial",20,"bold"),foreground="black",command=lambda:updatde_choice("paper"))
-paper_btn.grid(row=2,column=2,pady=(90, 10))
+paper_btn.grid(row=2,column=2,pady=(90,10))
 scissor_btn = Button(root,width=20,height=2,text="Scissor",background="#0ABDE3",font=("arial",20,"bold"),foreground="black",command=lambda:updatde_choice("scissor"))
-scissor_btn.grid(row=2,column=3,pady=(90, 10))
+scissor_btn.grid(row=2,column=3,pady=(90,10))
 
 #frame for reset and quit button 
 r_q_frame = Frame(root,background=background_color)
 
 #reset button
 reset_btn = Button(r_q_frame, text="Reset Game",font=("arial",20,"bold"),command=lambda: reset_game())
-reset_btn.pack(side=LEFT ,padx=10)
+reset_btn.pack(side=LEFT,padx=10)
 
 #quit game button
 quit_btn = Button(r_q_frame, text="Quit Game",font=("arial",20,"bold"),command=lambda: quit_game())
-quit_btn.pack(side=RIGHT ,padx=10)
+quit_btn.pack(side=RIGHT,padx=10)
 
-r_q_frame.grid(row=3, column=0, rowspan=4, columnspan=5, pady=(90,10))
+r_q_frame.grid(row=3,rowspan=4,columnspan=5,pady=(90,10))
 
 # end game frame
 end_game_frame = Frame(root,background=background_color)
@@ -62,12 +63,11 @@ end_game_message = Label(end_game_frame,text="",font=("arial",20,"bold"),backgro
 end_game_message.pack(pady=10)
 playagain_btn = Button(end_game_frame,text="Play Again",font=("arial",20,"bold"),command=lambda: reset_game())
 playagain_btn.pack(pady=10)
-end_game_frame.grid(row=1, column=0, rowspan=2, columnspan=5, pady=(0,100))
+end_game_frame.grid(row=1,column=0,rowspan=2,columnspan=5,pady=(0,100))
 end_game_frame.grid_remove()  # Hide initially
 
 #update choices
 def updatde_choice(user_choice):
-  global check_for_winner
   #for user
   if user_choice=="rock":
     user_img_label.configure(image=rock_user_img)

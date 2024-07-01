@@ -119,14 +119,14 @@ class Game:
   
   def display_score(self):
     font = pygame.font.SysFont('arial',30)
-    score = font.render(f"Score: {self.snake.snake_length}",True,(200,200,200))
+    score = font.render(f"Score: {(self.snake.snake_length)-1}",True,(200,200,200))
     score_rect = score.get_rect()
     self.screen.blit(score,score_rect)
 
   def show_game_over(self):
       self.render_background()
       font = pygame.font.SysFont('arial', 30)
-      line1 = font.render(f"Game is over! Your score is {self.snake.snake_length}", True, (255, 255, 255))
+      line1 = font.render(f"Game is over! Your score is {(self.snake.snake_length)-1}", True, (255, 255, 255))
       line1_rect = line1.get_rect(center=((screen_width/2),(screen_height/2)))
       self.screen.blit(line1,line1_rect)
       line2 = font.render("To play again press Enter. To exit press Escape!", True, (255, 255, 255))
@@ -160,19 +160,19 @@ class Game:
     while True:
       for event in pygame.event.get():
         if event.type ==  KEYDOWN:
-          if event.key == K_ESCAPE:          
+          if event.key == K_ESCAPE or event.key == K_q:          
             pygame.quit() # deactivating pygame library                        
             quit() # quit the program
           elif event.key  == K_RETURN: # for enter key
             self.reset()
             running = True
-          elif event.key == K_UP:
+          elif event.key == K_UP or event.key == K_w:
             self.snake.move_up("up")
-          elif event.key == K_DOWN:
+          elif event.key == K_DOWN or event.key == K_s:
             self.snake.move_down("down")
-          elif event.key == K_LEFT:
+          elif event.key == K_LEFT or event.key == K_a:
             self.snake.move_left("left")
-          elif event.key == K_RIGHT:
+          elif event.key == K_RIGHT or event.key == K_d:
             self.snake.move_right("right")
         elif event.type == QUIT:
           pygame.quit() # deactivating pygame library                        
